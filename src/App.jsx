@@ -15,34 +15,29 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-background relative selection:bg-primary/30 dark font-sans">
-      {/* Background Ornaments */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[20%] right-[-10%] w-[30%] h-[50%] bg-accent/10 blur-[120px] rounded-full" />
-      </div>
-
+    <div className="min-h-screen bg-background text-foreground relative selection:bg-primary/20 selection:text-primary font-sans bg-grid-pattern">
+      
       {/* Navbar */}
-      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-white/5 shadow-sm' : 'bg-transparent'}`}>
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
-              <Layers className="text-primary-foreground w-5 h-5" />
+      <header className={`fixed top-0 w-full z-50 transition-all duration-200 ${isScrolled ? 'bg-white/90 backdrop-blur-sm border-b border-slate-200 shadow-sm' : 'bg-transparent'}`}>
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded bg-primary flex items-center justify-center shadow-sm">
+              <Layers className="text-white w-4 h-4" />
             </div>
-            <span className="font-bold text-xl tracking-tight hidden sm:block">
-              Construct<span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Optima</span>
+            <span className="font-bold text-xl tracking-tight text-slate-900 hidden sm:block">
+              Construct<span className="text-primary">Optima</span>
             </span>
           </div>
           <nav className="flex items-center gap-4">
-            <Button variant="ghost" className="text-sm hidden md:inline-flex">Methodology</Button>
-            <Button onClick={() => document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' })} className="shadow-lg shadow-primary/20">
+            <Button variant="ghost" onClick={() => document.getElementById('methodology').scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-slate-600 hover:text-slate-900 hidden md:inline-flex">Methodology</Button>
+            <Button onClick={() => document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' })} className="shadow-sm font-medium">
               Start Optimizing
             </Button>
           </nav>
@@ -51,46 +46,81 @@ export default function App() {
 
       <main className="relative z-10 w-full max-w-[100vw] overflow-hidden">
         {/* Hero Section */}
-        <section className="min-h-[90vh] flex flex-col items-center justify-center px-4 pt-24 pb-12 text-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+        <section className="min-h-[85vh] flex flex-col items-center justify-center px-4 pt-32 pb-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-4xl mx-auto space-y-8"
           >
-            <div className="mx-auto inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-2 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-              <Leaf className="w-4 h-4" /> Sustainable Construction Intelligence
+            <div className="mx-auto inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-sm font-medium mb-4">
+              <Leaf className="w-3.5 h-3.5 text-primary" /> Sustainable Construction Intelligence
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-[1.15]">
-              Optimizing Materials, <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-400 to-accent">Minimizing Waste.</span>
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
+              Optimizing Materials, <br />
+              <span className="text-primary">Minimizing Waste.</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
               Empower your projects with predictive material estimation, precise waste analytics, and eco-friendly structural alternatives.
             </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-              <Button size="lg" className="h-14 px-8 text-lg font-medium shadow-xl shadow-primary/25 w-full sm:w-auto" onClick={() => document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' })}>
-                Launch Calculator <ArrowRight className="ml-2 w-5 h-5" />
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
+              <Button size="lg" className="h-12 px-8 text-base font-medium shadow-sm w-full sm:w-auto" onClick={() => document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' })}>
+                Launch Calculator
               </Button>
-              <Button size="lg" variant="outline" className="h-14 px-8 text-lg bg-background/50 backdrop-blur border-border/50 hover:bg-muted w-full sm:w-auto" onClick={() => document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' })}>
+              <Button size="lg" variant="outline" className="h-12 px-8 text-base bg-white border-slate-200 text-slate-700 hover:bg-slate-50 w-full sm:w-auto shadow-sm" onClick={() => document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' })}>
                 View Demo
               </Button>
             </div>
           </motion.div>
         </section>
 
-        {/* Calculator Section */}
-        <section id="calculator" className="py-24 px-4 bg-secondary/20 border-y border-white/5 relative">
-          <div className="container mx-auto">
+        {/* Methodology Section */}
+        <section id="methodology" className="py-24 px-4 bg-white border-t border-slate-100">
+          <div className="container mx-auto max-w-5xl">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">Core Calculation Engine</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Input your foundational architectural parameters to generate a highly optimized material matrix.</p>
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">Calculation Methodology</h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                We utilize industry-standard baseline consumption metrics combined with advanced predictive waste matrices to provide surgical precision for your structural material needs.
+              </p>
             </div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mx-auto mb-4">
+                  <Activity className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Base Aggregation</h3>
+                <p className="text-slate-600 text-[14.5px] leading-relaxed">Calculations are strictly bound by localized building codes and empirical density constants spanning 7 distinct facility types.</p>
+              </div>
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mx-auto mb-4">
+                  <Layers className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Waste Anticipation</h3>
+                <p className="text-slate-600 text-[14.5px] leading-relaxed">Integrated 2D arrays isolate logistical and trimming losses specific to the intersection of material type and building class.</p>
+              </div>
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mx-auto mb-4">
+                  <Leaf className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Sustainable Alternatives</h3>
+                <p className="text-slate-600 text-[14.5px] leading-relaxed">A proprietary mapping engine identifies green structural equivalencies to minimize carbon footprints and drive down expenditures.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Calculator Section */}
+        <section id="calculator" className="py-24 px-4 bg-slate-50 border-y border-slate-200">
+          <div className="container mx-auto">
+            <div className="text-center mb-16 max-w-2xl mx-auto">
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">Core Calculation Engine</h2>
+              <p className="text-lg text-slate-600">Input your foundational architectural parameters to generate a highly optimized material matrix.</p>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
@@ -102,34 +132,34 @@ export default function App() {
         {/* Results Dashboard */}
         <AnimatePresence>
           {results.length > 0 && (
-            <motion.section 
+            <motion.section
               id="results-dashboard"
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="py-24 px-4 container mx-auto"
+              className="py-24 px-4 container mx-auto bg-white"
             >
-              <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-border pb-8">
+              <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-8">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold flex items-center gap-3 tracking-tight">
-                    <Activity className="text-primary w-8 h-8" />
+                  <h2 className="text-3xl font-bold flex items-center gap-2.5 tracking-tight text-slate-900">
+                    <Activity className="text-primary w-7 h-7" />
                     Optimization Dashboard
                   </h2>
-                  <p className="text-muted-foreground mt-3 text-lg">
-                    Comprehensive material mapping for a <span className="text-foreground font-semibold px-2 py-0.5 bg-muted rounded">{buildingType}</span> structure over <span className="text-foreground font-semibold px-2 py-0.5 bg-muted rounded">{areaSqFt.toLocaleString()} sq.ft</span>
+                  <p className="text-slate-600 mt-2 text-lg">
+                    Comprehensive material mapping for a <span className="text-slate-900 font-semibold">{buildingType}</span> structure over <span className="text-slate-900 font-semibold">{areaSqFt.toLocaleString()} sq.ft</span>
                   </p>
                 </div>
               </div>
 
               {/* Grid 1: Materials */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mb-16">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mb-16">
                 {results.map((res, i) => (
                   <MaterialCard key={i} {...res} />
                 ))}
               </div>
 
               {/* Grid 2: Analytics & Techniques */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-                <div className="lg:col-span-1 h-[450px]">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 items-start">
+                <div className="lg:col-span-1 sticky top-24 z-10">
                   <WasteChart data={results} />
                 </div>
                 <div className="lg:col-span-2">
@@ -146,8 +176,8 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      <footer className="py-10 text-center text-muted-foreground border-t border-white/5 mt-12 bg-card/10">
-        <p className="text-sm">© 2026 ConstructOptima SaaS. Engineering for Sustainability.</p>
+      <footer className="py-12 text-center text-slate-500 border-t border-slate-200 bg-white mt-12 w-full">
+        <p className="text-sm font-medium">© 2026 ConstructOptima SaaS. Engineering for Sustainability.</p>
       </footer>
     </div>
   );

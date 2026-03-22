@@ -1,5 +1,5 @@
 import { materialsData } from "../data/materialsData";
-import { wasteData, buildingWasteMultipliers } from "../data/wasteData";
+import { wasteData } from "../data/wasteData";
 
 export function calculateMaterials(buildingType, areaSqFt) {
   if (!buildingType || !areaSqFt || isNaN(areaSqFt)) {
@@ -7,18 +7,22 @@ export function calculateMaterials(buildingType, areaSqFt) {
   }
 
   const materials = materialsData[buildingType];
-  if (!materials) return [];
-
-  const wasteMultiplier = buildingWasteMultipliers[buildingType] || 1.0;
+  const buildingWaste = wasteData[buildingType];
+  if (!materials || !buildingWaste) return [];
 
   return materials.map(item => {
+    // 1. Calculate Average Requirement per sq ft
     const avgRequirement = (item.min + item.max) / 2;
-    const required = avgRequirement * areaSqFt;
+    
+    // 2. Total Required (Net)
+    let required = avgRequirement * areaSqFt;
 
-    const baseWastePct = wasteData[item.name] || 0.05;
-    const finalWastePct = baseWastePct * wasteMultiplier;
-    const wasteQuantity = required * finalWastePct;
+    // 3. Calculate Waste
+    const wasteRange = buildingWaste[item.name] || [5, 5]; 
+    const avgWastePct = (wasteRange[0] + wasteRange[1]) / 2 / 100;
+    const wasteQuantity = required * avgWastePct;
 
+    // 4. Total Gross Requirement
     const total = required + wasteQuantity;
 
     return {
@@ -27,7 +31,7 @@ export function calculateMaterials(buildingType, areaSqFt) {
       waste: parseFloat(wasteQuantity.toFixed(2)),
       total: parseFloat(total.toFixed(2)),
       unit: item.unit,
-      wastePercentage: (finalWastePct * 100).toFixed(1),
+      wastePercentage: (avgWastePct * 100).toFixed(1),
     };
   });
 }

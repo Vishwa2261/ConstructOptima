@@ -38,45 +38,44 @@ export function CalculatorForm() {
         const results = calculateMaterials(data.buildingType, data.area);
         setCalculationParams(data.buildingType, data.area, results);
         
-        // Smooth scroll to results
         document.getElementById('results-dashboard')?.scrollIntoView({ behavior: 'smooth' });
-        
         resolve();
-      }, 500);
+      }, 400);
     });
   };
 
   return (
-    <Card className="glass shadow-2xl border-white/10 w-full max-w-xl mx-auto overflow-hidden relative">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent"></div>
-      <CardHeader>
-        <CardTitle className="text-2xl flex items-center gap-2">
-          <Calculator className="text-primary w-6 h-6" />
+    <Card className="bg-white shadow-sm border border-slate-200 w-full max-w-xl mx-auto overflow-hidden relative rounded-xl">
+      <CardHeader className="pb-6 border-b border-slate-100 bg-slate-50/50">
+        <CardTitle className="text-xl flex items-center gap-2 text-slate-900 font-semibold">
+          <Calculator className="text-primary w-5 h-5" />
           Project Parameters
         </CardTitle>
-        <CardDescription className="text-base text-muted-foreground">
-          Enter your project details to estimate structural material requirements.
+        <CardDescription className="text-sm text-slate-500 mt-1">
+          Specify building type and total floor area.
         </CardDescription>
       </CardHeader>
       
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-7">
-          <div className="space-y-3 relative">
-            <Label htmlFor="buildingType" className="text-base font-semibold">Building Type</Label>
-            <Select id="buildingType" {...register("buildingType")} className="h-12 text-[15px]">
+        <CardContent className="space-y-6 pt-6 pb-2">
+          <div className="space-y-2 relative">
+            <Label htmlFor="buildingType" className="text-sm font-medium text-slate-700">Building Type</Label>
+            <Select id="buildingType" {...register("buildingType")} className="h-11 bg-white border-slate-200 text-slate-900 focus:ring-primary/20 focus:border-primary shadow-sm rounded-lg text-sm">
               {buildingTypes.map(type => (
-                <option key={type} value={type}>{type}</option>
+                <option key={type} value={type}>
+                  {type}
+                </option>
               ))}
             </Select>
             {errors.buildingType && (
-              <p className="text-sm text-destructive absolute -bottom-6 left-0">{errors.buildingType.message}</p>
+              <p className="text-xs text-red-500 absolute -bottom-5 left-0 font-medium">{errors.buildingType.message}</p>
             )}
           </div>
 
-          <div className="space-y-3 relative">
+          <div className="space-y-2 relative">
             <div className="flex justify-between items-center">
-              <Label htmlFor="area" className="text-base font-semibold">Total Floor Area</Label>
-              <span className="text-xs font-semibold tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded uppercase">
+              <Label htmlFor="area" className="text-sm font-medium text-slate-700">Total Floor Area</Label>
+              <span className="text-[10px] font-bold tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded uppercase border border-slate-200">
                 Sq.Ft
               </span>
             </div>
@@ -84,21 +83,21 @@ export function CalculatorForm() {
               id="area" 
               type="number" 
               placeholder="e.g. 1500" 
-              className="text-lg py-6" 
+              className="h-11 bg-white border-slate-200 text-slate-900 focus:ring-primary/20 focus:border-primary shadow-sm rounded-lg text-sm" 
               {...register("area", { valueAsNumber: true })} 
             />
             {errors.area && (
-              <p className="text-sm text-destructive absolute -bottom-6 left-0">{errors.area.message}</p>
+              <p className="text-xs text-red-500 absolute -bottom-5 left-0 font-medium">{errors.area.message}</p>
             )}
           </div>
         </CardContent>
         
-        <CardFooter className="bg-muted/20 pt-6 mt-4 border-t border-border">
-          <Button type="submit" className="w-full text-lg h-14 tracking-wide font-medium bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-lg" disabled={isSubmitting}>
+        <CardFooter className="pt-6 pb-6 mt-2">
+          <Button type="submit" className="w-full h-11 text-sm font-semibold shadow-sm transition-all rounded-lg text-white" disabled={isSubmitting}>
             {isSubmitting ? (
               <span className="flex items-center gap-2">
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Optimizing Structure...
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                Processing Data...
               </span>
             ) : "Calculate Material Matrix"}
           </Button>
